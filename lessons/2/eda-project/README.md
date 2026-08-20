@@ -1,112 +1,191 @@
-# Miniprojeto B — Painel EDA de Permanência Estudantil
+# EDA Project — Painel de Permanência Estudantil
 
-## Missão
+Miniprojeto didático em **React Native + Expo + TypeScript** para praticar tipos, interfaces, funções tipadas, componentes, `props`, estado e manipulação de coleções.
 
-Construir um pequeno painel tipado com indicadores simulados de permanência estudantil. Cada indicador será exibido por um componente reutilizável. Um botão deverá alternar entre todos os indicadores e somente os que exigem atenção.
+O projeto apresenta um painel com indicadores **fictícios e agregados** de permanência estudantil. A atividade foi preparada para ser concluída diretamente em `app/index.tsx`, a partir dos comentários `TODO 1` a `TODO 5`.
 
-> **Atenção:** os valores são fictícios, agregados e produzidos apenas para aprendizagem. O exercício não contém dados pessoais nem descreve uma turma real.
+> **Importante:** os dados usados neste projeto são exclusivamente didáticos. Eles não representam estudantes, turmas ou informações institucionais reais.
 
-## O que você vai praticar
+## Objetivos de aprendizagem
 
-- união de literais com `type`;
-- objeto tipado com `interface`;
-- função com parâmetros e retorno tipados;
-- componente com `props`;
-- estado booleano com `useState`;
-- coleção transformada por `.filter()` e `.map()`;
-- teste e commit no Git.
+Ao concluir a atividade, você deverá ser capaz de:
 
-## Resultado esperado
+- restringir valores possíveis com união de literais em `type`;
+- modelar objetos com `interface`;
+- declarar parâmetros e retornos de funções com tipos explícitos;
+- criar componentes reutilizáveis que recebem dados por `props`;
+- controlar a interface com `useState`;
+- filtrar coleções com `.filter()`;
+- renderizar coleções com `.map()` e `key`;
+- relacionar tipos TypeScript com componentes React Native.
 
-A tela deve mostrar três indicadores simulados. O botão “Somente atenção” filtra a coleção. Um novo toque remove o filtro e restaura todos os cartões. O texto do botão e a quantidade exibida devem acompanhar o estado atual.
+## Tecnologias do projeto
 
-## Preparação no VS Code — 5 minutos
+- Expo `~57.0.14`
+- React `19.2.3`
+- React Native `0.86.2`
+- React Native Web `^0.21.2`
+- TypeScript `~6.0.3`
 
-1. Abra o projeto-base usado na Aula 3.
-2. Abra o terminal integrado do VS Code.
-3. Confirme que está na pasta do projeto.
-4. Se ainda não executou o projeto nesta máquina, use:
+O TypeScript está configurado com `strict: true`.
 
-```powershell
+## Estrutura principal
+
+```text
+eda-project/
+├── app/
+│   └── index.tsx       # atividade principal
+├── assets/             # ícones e recursos visuais
+├── App.tsx             # encaminha para app/index.tsx
+├── index.ts            # ponto de entrada do Expo
+├── app.json            # configuração do Expo
+├── package.json        # dependências e scripts
+├── package-lock.json   # versões travadas das dependências
+└── tsconfig.json       # configuração do TypeScript
+```
+
+## Como executar
+
+Na raiz do projeto, instale exatamente as dependências registradas no `package-lock.json`:
+
+```bash
 npm ci
+```
+
+Antes de iniciar a aplicação, valide o ambiente e a compatibilidade das dependências com o Expo:
+
+```bash
 npx expo-doctor
 ```
 
-5. Copie o arquivo `app/index.tsx` fornecido nesta atividade para a rota inicial do projeto-base.
-6. Inicie o aplicativo:
+Se a verificação não apontar problemas que impeçam a execução, inicie o Expo:
 
-```powershell
+```bash
 npx expo start
 ```
 
-Abra no navegador com `w` ou leia o QR Code no Expo Go. Não instale bibliotecas e não recrie o projeto.
+Você também pode usar os scripts disponíveis:
 
-## Etapas da implementação — 35 minutos
+```bash
+npm run web
+npm run android
+npm run ios
+```
 
-Abra `app/index.tsx` e localize os comentários `TODO`.
+No terminal do Expo, pressione `w` para abrir a versão Web. Para executar em um dispositivo compatível, utilize o Expo Go conforme o ambiente disponibilizado em aula.
 
-### 1. Restrinja as situações válidas — 5 min
+## Missão
 
-Troque o tipo amplo `string` por uma união que aceite somente:
+O painel contém três indicadores simulados e um botão que deverá permitir alternar entre:
+
+1. **todos os indicadores**; e
+2. **somente os indicadores que exigem atenção**.
+
+O texto do botão e a quantidade de itens exibidos devem acompanhar o estado atual da interface.
+
+## Atividade
+
+Abra `app/index.tsx` e implemente os cinco pontos marcados com `TODO`.
+
+### TODO 1 — Restringir as situações válidas
+
+O tipo `SituacaoIndicador` não deve aceitar qualquer `string`. Restrinja-o para permitir apenas as duas situações utilizadas pelo painel:
 
 ```ts
 "adequado" | "atencao"
 ```
 
-Teste temporariamente um terceiro valor e observe a indicação do editor. Depois, desfaça o erro.
+### TODO 2 — Formatar os valores
 
-### 2. Melhore a função de formatação — 7 min
+A função `formatarValor` já possui parâmetros e retorno tipados.
 
-A função `formatarValor` deve:
+Ajuste sua implementação para que:
 
-- unir diretamente números e os símbolos `%` ou `p.p.`;
-- inserir um espaço antes da palavra `estudantes`.
+- `%` e `p.p.` sejam exibidos junto ao número;
+- `estudantes` seja exibido com um espaço após o número.
 
-Mantenha os parâmetros e o retorno explicitamente tipados.
+Exemplos esperados:
 
-### 3. Implemente o filtro da coleção — 8 min
-
-Quando `somenteAtencao` for `true`, use `.filter()` para manter apenas os registros cuja situação seja `"atencao"`. Quando for `false`, use todos os indicadores.
-
-### 4. Faça o botão alternar — 8 min
-
-A função `alternarFiltro` atualmente só ativa o filtro. Use a forma baseada no valor anterior para alternar entre `true` e `false`.
-
-Dica:
-
-```ts
-setSomenteAtencao((valorAtual) => !valorAtual);
+```text
+88%
+3p.p.
+7 estudantes
 ```
 
-### 5. Atualize a quantidade — 7 min
+### TODO 3 — Filtrar a coleção
 
-No cabeçalho, troque a quantidade fixa pelo tamanho da coleção que está realmente visível.
+A variável `indicadoresVisiveis` deve depender de `somenteAtencao`.
 
-## Teste e entrega — 15 minutos
+Quando o filtro estiver ativo, mantenha apenas os indicadores cuja situação seja `"atencao"`. Quando estiver desativado, utilize a coleção completa.
 
-Verifique:
+Use `.filter()` para realizar essa transformação.
 
-- [ ] existem somente as duas situações permitidas;
-- [ ] cada objeto segue a interface `IndicadorEDA`;
-- [ ] `formatarValor` possui parâmetros e retorno tipados;
-- [ ] os cartões recebem um indicador por `props`;
+### TODO 4 — Alternar o estado
+
+A função `alternarFiltro` deve alternar o estado entre `true` e `false` a cada toque no botão.
+
+Evite definir sempre o mesmo valor. Faça a atualização considerando o estado anterior.
+
+### TODO 5 — Atualizar a contagem
+
+A quantidade exibida ao lado do botão deve representar o número de cartões que estão realmente visíveis na tela.
+
+Ela deve mudar automaticamente quando o filtro for ativado ou removido.
+
+## Resultado esperado
+
+Ao finalizar:
+
+- a tela inicial exibirá três cartões;
+- cada cartão será renderizado pelo componente `CartaoIndicador`;
+- indicadores em atenção terão destaque visual;
+- o botão **Somente atenção** ativará o filtro;
+- o botão mudará para **Mostrar todos** enquanto o filtro estiver ativo;
+- a quantidade exibida será atualizada de acordo com a coleção filtrada;
+- um novo toque restaurará os três indicadores.
+
+## Checklist de validação
+
+Antes de entregar, verifique:
+
+- [ ] `SituacaoIndicador` aceita somente `"adequado"` e `"atencao"`;
+- [ ] os objetos de `INDICADORES` seguem a interface `IndicadorEDA`;
+- [ ] `formatarValor` mantém parâmetros e retorno tipados;
+- [ ] `CartaoIndicador` recebe um indicador por `props`;
+- [ ] `useState<boolean>` controla o filtro;
 - [ ] o botão alterna o estado nos dois sentidos;
-- [ ] a coleção usa `.filter()`, `.map()` e `key={indicador.id}`;
-- [ ] a quantidade exibida acompanha o filtro;
-- [ ] o aplicativo abre sem tela vermelha no navegador ou celular;
-- [ ] você consegue apontar no código um exemplo de tipo, prop, estado e coleção.
+- [ ] a coleção utiliza `.filter()` para selecionar os indicadores;
+- [ ] a renderização utiliza `.map()`;
+- [ ] cada cartão possui `key={indicador.id}`;
+- [ ] a contagem acompanha os indicadores visíveis;
+- [ ] `npx expo-doctor` não aponta problemas que impeçam a execução;
+- [ ] a aplicação executa sem erro no ambiente utilizado em aula;
+- [ ] você consegue identificar no código um exemplo de **tipo, interface, função tipada, prop, estado e coleção**.
 
-Faça o commit:
+## Entrega
 
-```powershell
+Confira primeiro as alterações:
+
+```bash
 git status
-git add app/index.tsx
-git commit -m "feat(aula-04): criar painel EDA tipado"
+git diff
 ```
 
-Entregue o identificador do commit e duas capturas: uma com todos os indicadores e outra com o filtro ativado.
+Depois registre sua implementação:
+
+```bash
+git add app/index.tsx
+git commit -m "feat(aula-04): implementar painel EDA tipado"
+```
+
+Entregue:
+
+1. o identificador do commit;
+2. uma captura com todos os indicadores;
+3. uma captura com o filtro **Somente atenção** ativado.
 
 ## Desafio opcional
 
-Adicione um quarto indicador fictício respeitando a interface. Não adicione gráficos, API, banco de dados nem biblioteca externa nesta aula.
+Adicione um quarto indicador fictício à coleção `INDICADORES`, respeitando integralmente a interface `IndicadorEDA` e os tipos já definidos.
 
+O desafio deve reutilizar a estrutura existente. Não é necessário adicionar API, banco de dados, gráficos ou bibliotecas externas.
