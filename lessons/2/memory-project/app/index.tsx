@@ -8,8 +8,7 @@ import {
   View,
 } from "react-native";
 
-// TODO 1: troque string por "Relato" | "Lugar" | "Celebração".
-type CategoriaMemoria = string;
+type CategoriaMemoria = "Relato" | "Lugar" | "Celebração";
 
 interface Memoria {
   id: number;
@@ -17,7 +16,7 @@ interface Memoria {
   comunidade: string;
   categoria: CategoriaMemoria;
   resumo: string;
-  // TODO 2: acrescente ano como propriedade number opcional.
+  ano?: number;
 }
 
 // Dados inteiramente fictícios para uso didático.
@@ -28,6 +27,7 @@ const MEMORIAS: Memoria[] = [
     comunidade: "Comunidade Fictícia A",
     categoria: "Relato",
     resumo: "Um relato simulado sobre caminhos usados entre casas e roçados.",
+    ano: 1948,
   },
   {
     id: 2,
@@ -35,6 +35,7 @@ const MEMORIAS: Memoria[] = [
     comunidade: "Comunidade Fictícia B",
     categoria: "Lugar",
     resumo: "Uma descrição simulada de um espaço de encontro comunitário.",
+    ano: 1957,
   },
   {
     id: 3,
@@ -51,6 +52,11 @@ type CartaoMemoriaProps = {
   aoSelecionar: (id: number) => void;
 };
 
+function criarLegenda(memoria: Memoria): string {
+  const anoTexto = memoria.ano !== undefined ? ` · ${memoria.ano}` : "";
+  return `${memoria.categoria} · ${memoria.comunidade}${anoTexto}`;
+}
+
 function CartaoMemoria({
   memoria,
   selecionada,
@@ -62,10 +68,7 @@ function CartaoMemoria({
       style={[styles.cartao, selecionada && styles.cartaoSelecionado]}
     >
       <Text style={styles.tituloCartao}>{memoria.titulo}</Text>
-      {/* TODO 3: crie criarLegenda(memoria: Memoria): string e use aqui. */}
-      <Text style={styles.legenda}>
-        {memoria.categoria} · {memoria.comunidade}
-      </Text>
+      <Text style={styles.legenda}>{criarLegenda(memoria)}</Text>
       <Text style={styles.acao}>
         {selecionada ? "Toque para fechar" : "Toque para conhecer"}
       </Text>
@@ -81,8 +84,7 @@ export default function Index() {
   );
 
   function alternarSelecao(id: number): void {
-    // TODO 4: se o mesmo id já estiver selecionado, grave null.
-    setIdSelecionada(id);
+    setIdSelecionada((idAtual) => (idAtual === id ? null : id));
   }
 
   return (
@@ -114,7 +116,11 @@ export default function Index() {
             <Text style={styles.textoDetalhes}>
               {memoriaSelecionada.resumo}
             </Text>
-            {/* TODO 5: mostre o ano somente quando ele existir. */}
+            {memoriaSelecionada.ano !== undefined ? (
+              <Text style={styles.textoDetalhes}>
+                Ano: {memoriaSelecionada.ano}
+              </Text>
+            ) : null}
           </View>
         ) : (
           <Text style={styles.vazio}>Nenhuma memória selecionada.</Text>

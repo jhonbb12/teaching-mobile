@@ -9,7 +9,11 @@ type CartaoIndicadorProps = { indicador: IndicadorEDA };
 export function CartaoIndicador({ indicador }: CartaoIndicadorProps) {
   const emAtencao = indicador.situacao === "atencao";
   return (
-    <View style={[styles.cartao, emAtencao && styles.cartaoAtencao]}>
+    <View
+      accessibilityRole="summary"
+      accessibilityLabel={`${indicador.titulo}: ${formatarValor(indicador.valor, indicador.unidade)}; meta didática ${formatarValor(indicador.meta, indicador.unidade)}; ${emAtencao ? "em atenção" : "adequado"}`}
+      style={[styles.cartao, emAtencao && styles.cartaoAtencao]}
+    >
       <View style={styles.linhaTitulo}>
         <Text style={styles.titulo}>{indicador.titulo}</Text>
         <Text style={[styles.situacao, emAtencao && styles.situacaoAtencao]}>
