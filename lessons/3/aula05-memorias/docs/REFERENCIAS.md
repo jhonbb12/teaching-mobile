@@ -11,8 +11,8 @@
 
 ## Regras usadas nesta aula
 
-- `Pressable` fornece estado `pressed` para feedback e `hitSlop` para ampliar a região detectável; a região de toque não ultrapassa os limites da View pai.
+- Pressable fornece estado pressed para feedback e hitSlop para ampliar a região detectável; a região de toque não ultrapassa os limites da View pai.
 - Android recomenda alvo de toque de pelo menos 48 × 48 dp para controles interativos.
-- `accessibilityLabel` dá um nome compreensível ao elemento; `accessibilityHint` só é necessário quando o resultado da ação não fica claro pelo label.
-- No React Native, `flexDirection` padrão é `column`.
+- accessibilityLabel dá um nome compreensível ao elemento; accessibilityHint só é necessário quando o resultado da ação não fica claro pelo label.
+- No React Native, flexDirection padrão é column.
 - A imagem local da atividade é fictícia/decorativa e não representa comunidade, turma ou estudante real.
